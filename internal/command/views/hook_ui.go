@@ -18,6 +18,7 @@ import (
 
 	"github.com/opentofu/opentofu/internal/addrs"
 	"github.com/opentofu/opentofu/internal/command/format"
+	"github.com/opentofu/opentofu/internal/lang/marks"
 	"github.com/opentofu/opentofu/internal/plans"
 	"github.com/opentofu/opentofu/internal/providers"
 	"github.com/opentofu/opentofu/internal/states"
@@ -256,7 +257,13 @@ func (h *UiHook) PreProvisionInstanceStep(addr addrs.AbsResourceInstance, typeNa
 	return tofu.HookActionContinue, nil
 }
 
-func (h *UiHook) ProvisionOutput(addr addrs.AbsResourceInstance, typeName string, msg string) {
+func (h *UiHook) ProvisionOutput(addr addrs.AbsResourceInstance, typeName string, msg string, configMarks cty.ValueMarks) {
+	// If the config has sensitive marks and showSensitive is not enabled,
+	// suppress the output.
+	if _, hasSensitive := configMarks[marks.Sensitive]; hasSensitive && !h.view.ShowSensitive() {
+		msg = "(output suppressed due to sensitive value in config)"
+	}
+
 	var buf bytes.Buffer
 
 	prefix := fmt.Sprintf(

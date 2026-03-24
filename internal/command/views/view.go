@@ -248,10 +248,6 @@ func (v *View) SetShowSensitive(showSensitive bool) {
 	v.showSensitive = showSensitive
 }
 
-func (v *View) ShowSensitive() bool {
-	return v.showSensitive
-}
-
 // error is an unexported method that can be used by other views to send to stderr the given message fully colored in
 // [View#errorColor].
 // This adds a new line after the message.

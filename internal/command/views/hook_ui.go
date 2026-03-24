@@ -260,7 +260,7 @@ func (h *UiHook) PreProvisionInstanceStep(addr addrs.AbsResourceInstance, typeNa
 func (h *UiHook) ProvisionOutput(addr addrs.AbsResourceInstance, typeName string, msg string, configMarks cty.ValueMarks) {
 	// If the config has sensitive marks and showSensitive is not enabled,
 	// suppress the output.
-	if _, hasSensitive := configMarks[marks.Sensitive]; hasSensitive && !h.view.ShowSensitive() {
+	if _, hasSensitive := configMarks[marks.Sensitive]; hasSensitive && !h.view.showSensitive {
 		msg = "(output suppressed due to sensitive value in config)"
 	}
 

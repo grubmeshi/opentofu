@@ -156,7 +156,7 @@ func (h *jsonHook) PostProvisionInstanceStep(addr addrs.AbsResourceInstance, typ
 func (h *jsonHook) ProvisionOutput(addr addrs.AbsResourceInstance, typeName string, msg string, configMarks cty.ValueMarks) {
 	// If the config has sensitive marks and showSensitive is not enabled,
 	// suppress the output.
-	if _, hasSensitive := configMarks[marks.Sensitive]; hasSensitive && !h.view.view.ShowSensitive() {
+	if _, hasSensitive := configMarks[marks.Sensitive]; hasSensitive && !h.view.view.showSensitive {
 		msg = "(output suppressed due to sensitive value in config)"
 	}
 

@@ -459,7 +459,11 @@ Changes to Outputs:
 					`simple_resource.test_res (local-exec): visible test value`,
 					`simple_resource.test_res (local-exec): \"visible test value\"`,
 				}, true},
-				outputEntry{[]string{"simple_resource.test_res (local-exec): (output suppressed due to ephemeral value in config)"}, true},
+				outputEntry{[]string{
+				`simple_resource.test_res (local-exec): Executing: ["/bin/sh" "-c" "echo \"not visible`,
+				`simple_resource.test_res (local-exec): Executing: ["cmd" "/C" "echo \"not visible`,
+			}, true},
+			outputEntry{[]string{`simple_resource.test_res (local-exec): not visible`}, true},
 			)
 			out := stripAnsi(stdout)
 
